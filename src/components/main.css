@@ -26,6 +26,7 @@ html, body, #tddbin, #main {
   left: 50%;
   width: 50%;
   height: calc(100% - 50px);
+  color: #ffffff;
   background-color: var(--runner-background-color);
 }
 

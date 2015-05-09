@@ -80,6 +80,16 @@ export default class Game {
         health: 100
       }, {
         health: 100
+      }, {
+        health: 100
+      }, {
+        health: 100
+      }, {
+        health: 100
+      }, {
+        health: 100
+      }, {
+        health: 100
       }]
     );
   }

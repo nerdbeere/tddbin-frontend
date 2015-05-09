@@ -5,7 +5,7 @@ import Tower from './tower.js';
 export default class PlayingField extends React.Component {
 
   render() {
-    const {snapshot, onNext, onPrevious} = this.props;
+    const {snapshot, onNext, onPrevious, onPlay} = this.props;
 
     if(!snapshot) {
       return <div>
@@ -35,6 +35,7 @@ export default class PlayingField extends React.Component {
         <div className="controls">
           <button onClick={onPrevious}>previous</button>
           <button onClick={onNext}>next</button>
+          <button onClick={onPlay}>play</button>
         </div>
       </div>
     );

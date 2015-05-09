@@ -8,17 +8,49 @@ export default class TestRunner {
     this._domNode = domNode;
     this._snapshots = [];
     this._currentSnapshot = 0;
+    this._autoPlayTimeout = 300;
+    this._stop = false;
+    this._playing = false;
   }
 
-  render() {
+  render(noAutoplay) {
     React.render(
       <PlayingField
         onNext={this.onNext.bind(this)}
         onPrevious={this.onPrevious.bind(this)}
+        onPlay={this.onPlay.bind(this)}
         snapshot={this._snapshots[this._currentSnapshot]}
       ></PlayingField>,
       this._domNode
-    )
+    );
+
+    if(noAutoplay !== true) {
+      setTimeout(this.play.bind(this), this._autoPlayTimeout);
+    }
+  }
+
+  play() {
+    if(this._playing) {
+      return false;
+    }
+    this._stop = false;
+    this._playing = true;
+    var that = this;
+    (function playLoop() {
+      if(!that._stop && that._currentSnapshot < that._snapshots.length - 1) {
+        setTimeout(playLoop, that._autoPlayTimeout);
+      } else {
+        that.stop();
+        return;
+      }
+      that._next();
+      that.render(true);
+    })();
+  }
+
+  stop() {
+    this._stop = true;
+    this._playing = false;
   }
 
   send(sourceCode) {
@@ -28,19 +60,32 @@ export default class TestRunner {
   }
 
   onNext() {
+    this.stop();
+    this._next();
+    this.render(true);
+  }
+
+  _next() {
     if(this._currentSnapshot === this._snapshots.length - 1) {
       return false;
     }
     this._currentSnapshot++;
-    this.render();
   }
 
-  onPrevious() {
+  _previous() {
     if(this._currentSnapshot === 0) {
       return false;
     }
     this._currentSnapshot--;
-    this.render();
+  }
+
+  onPlay() {
+    this.play();
+  }
+
+  onPrevious() {
+    this._previous();
+    this.render(true);
   }
 
   onStats(fn) {
