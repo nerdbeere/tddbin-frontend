@@ -1,6 +1,6 @@
 import React from 'react';
 import Main from './components/main.js';
-import TestRunner from './test-runner/runner';
+import TestRunner from './game-runner/runner';
 import ShortcutProcessor from './keyboard-shortcut/shortcut-processor';
 import Editor from './editor';
 

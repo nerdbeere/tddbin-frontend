@@ -1,0 +1,24 @@
+@import "./minion.css";
+@import "./tower.css";
+
+.playing-field-container {
+  position: relative;
+}
+
+.frame-meta-data {
+ text-align: center;
+}
+
+.frame-meta-data > span {
+ display: inline-block;
+  margin-left: 10px;
+}
+
+.playing-field {
+  width: 300px;
+  height: 600px;
+  background: #363738;
+  position: absolute;
+  left: calc(50% - 150px);
+  top: 100px;
+}
