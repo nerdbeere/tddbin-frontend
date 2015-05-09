@@ -33,3 +33,7 @@ html, body, #tddbin, #main {
   .editor-and-runner .runner iframe {
     border: none;
   }
+
+#editorId {
+  background-color: #141414 !important;
+}
