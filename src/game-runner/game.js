@@ -46,7 +46,10 @@ export default class Game {
 
       // towers tick
       this._towers.forEach(function(tower) {
-        tower.tick(this._spawner.getMinions());
+        const killedMinion = tower.tick(this._spawner.getMinions());
+        if(killedMinion) {
+          this._addCredits(killedMinion.getBounty())
+        }
       }.bind(this));
 
       // player tick
@@ -153,6 +156,10 @@ export default class Game {
 
   _spendCredits(amount) {
     this._credits -= amount;
+  }
+
+  _addCredits(amount) {
+    this._credits += amount;
   }
 
   _takeSnapshot() {

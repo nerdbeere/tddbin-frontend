@@ -7,6 +7,7 @@ export default class Minion {
     this._target = target;
     this._health = minionConfig.health || 100;
     this._maxHealth = this._health;
+    this._bounty = minionConfig.bounty || 50;
   }
 
   isDead() {
@@ -50,6 +51,10 @@ export default class Minion {
   _move(position) {
     this._oldPosition = this._position;
     this._position = position;
+  }
+
+  getBounty() {
+    return this._bounty;
   }
 
   getSnapshot() {

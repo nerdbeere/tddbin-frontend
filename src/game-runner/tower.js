@@ -20,8 +20,10 @@ export default class Tower {
     }
 
     if(this._hasTarget()) {
-      this._damageTarget();
+      return this._damageTarget();
     }
+
+    return null;
   }
 
   _hasTarget() {
@@ -32,6 +34,9 @@ export default class Tower {
     var newTarget = null;
     var newTargetDistance = Infinity;
     minions.forEach(function(minion) {
+      if(minion.isDead()) {
+        return;
+      }
       var distanceToMinion = this._position.distance(minion.getPosition());
       if(distanceToMinion <= this._range && distanceToMinion < newTargetDistance) {
         newTargetDistance = distanceToMinion;
@@ -46,9 +51,12 @@ export default class Tower {
 
   _damageTarget() {
     this._target.takeDamage(this._damage);
+    var killedMinion = null;
     if(this._target.isDead()) {
+      killedMinion = this._target;
       this._clearTarget();
     }
+    return killedMinion;
   }
 
   _targetIsOutOfRange() {
