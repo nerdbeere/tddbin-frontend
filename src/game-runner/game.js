@@ -168,20 +168,10 @@ export default class Game {
 
   _takeSnapshot() {
 
-    const finder = new PF.AStarFinder();
-    const minionPath = finder.findPath(
-      this._minionSpawnLocation.x,
-      this._minionSpawnLocation.y,
-      this._minionTarget.x,
-      this._minionTarget.y,
-      this._grid.clone()
-    );
-
     var snapshot = {
       frame: this._frame,
       credits: this._credits,
       grid: this._grid,
-      path: minionPath,
       minionsReachedTarget: this._getAmountOfMinionsThatReachedTarget(),
       minionSpawnLocation: this._minionSpawnLocation,
       minionTarget: this._minionTarget,

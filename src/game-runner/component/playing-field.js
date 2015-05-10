@@ -15,10 +15,10 @@ export default class PlayingField extends React.Component {
 
     //console.log(snapshot.path);
     const minions = snapshot.minions.map(function(minion) {
-      return <Minion minion={minion}></Minion>
+      return <Minion minion={minion}></Minion>;
     });
     const towers = snapshot.towers.map(function(tower) {
-      return <Tower tower={tower}></Tower>
+      return <Tower tower={tower}></Tower>;
     });
 
     return (
