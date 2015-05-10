@@ -6,12 +6,19 @@
 }
 
 .frame-meta-data {
- text-align: center;
+  text-align: center;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
 }
 
 .frame-meta-data > span {
- display: inline-block;
+  display: inline-block;
   margin-left: 10px;
+  background: #363738;
+  padding: 10px;
+  font-size: 14px;
 }
 
 .playing-field {
@@ -42,4 +49,18 @@
   border-radius: 500px;
   height: 60px;
   width: 60px;
+}
+
+.outcome {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 24px;
+  padding: 10px;
+  background: #b4ff2b;
+}
+
+.outcome.defeat {
+  background: #ff9166;
 }

@@ -11,12 +11,24 @@ export default class PlayingField extends React.Component {
       onPrevious,
       onPlay,
       onPause,
-      isPlaying
+      isPlaying,
+      victory
     } = this.props;
 
     if(!snapshot) {
       return <div>
         Game did not run
+      </div>;
+    }
+
+    console.log(victory);
+
+    var victoryOrDefeat = <div className="outcome defeat">
+      Defeat
+    </div>;
+    if(victory) {
+      victoryOrDefeat = <div className="outcome victory">
+        Victory
       </div>;
     }
 
@@ -40,6 +52,7 @@ export default class PlayingField extends React.Component {
 
     return (
       <div className="playing-field-container">
+        {victoryOrDefeat}
         <div className="frame-meta-data">
           <span>Frame: {snapshot.frame}</span>
           <span>Credits: {snapshot.credits}</span>

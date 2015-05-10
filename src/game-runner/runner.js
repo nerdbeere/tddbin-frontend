@@ -11,9 +11,14 @@ export default class TestRunner {
     this._autoPlayTimeout = 300;
     this._stop = false;
     this._playing = false;
+    this._isVictory = false;
   }
 
   render(noAutoplay) {
+    var snapshot = this._snapshots[this._currentSnapshot];
+    if(!snapshot && this._snapshots.length > 0) {
+      snapshot = this._snapshots[this._snapshots.length - 1];
+    }
     React.render(
       <PlayingField
         onNext={this.onNext.bind(this)}
@@ -21,7 +26,8 @@ export default class TestRunner {
         onPlay={this.onPlay.bind(this)}
         onPause={this.onPause.bind(this)}
         isPlaying={this._playing}
-        snapshot={this._snapshots[this._currentSnapshot]}
+        snapshot={snapshot}
+        victory={this._isVictory}
       ></PlayingField>,
       this._domNode
     );
@@ -57,6 +63,7 @@ export default class TestRunner {
 
   send(sourceCode) {
     var game = new Game(sourceCode);
+    this._isVictory = game.isVictory();
     this._snapshots = game.getSnapshots();
     this.render();
   }

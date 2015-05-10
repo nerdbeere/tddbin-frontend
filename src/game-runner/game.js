@@ -15,6 +15,10 @@ export default class Game {
     return this._snapshots;
   }
 
+  isVictory() {
+    return this._isVictory;
+  }
+
   _executePlayerCode(playerSourceCode) {
     const publicApi = this._getPublicApi();
     const sourceCode = `
@@ -66,9 +70,12 @@ export default class Game {
       }
     }
 
+    console.log('Is Victory?', this._isVictory);
+
   }
 
   _setupLevel() {
+    this._isVictory = false;
     this._credits = 100;
     this._towerCosts = 60;
     this._towers = [];
@@ -111,16 +118,19 @@ export default class Game {
     if (this._tooManyMinionsReachedTarget()) {
       console.log('defeat - too many minions reached target');
       // player looses
+      this._isVictory = false;
       return true;
     }
     if (this._allManyMinionsReachedTarget()) {
       console.log('defeat - all minions reached target');
       // player looses
+      this._isVictory = false;
       return true;
     }
     if (this._allMinionsDead()) {
       console.log('victory - all minions dead');
       // player wins
+      this._isVictory = true;
       return true;
     }
 

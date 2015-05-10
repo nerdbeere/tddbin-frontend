@@ -11,7 +11,6 @@ export default class NavigationBar extends React.Component {
     const {onSave, metaKeySymbol, onResetCode} = this.props;
     return (
       <header className="navigation-bar">
-        <button className="logo"></button>
         <span className="tddbin">TowerDefense</span>
         <button className="save" title={`Run tests (${metaKeySymbol}S)`} onClick={onSave}>Run tests</button>
         <button title="Reset code" onClick={onResetCode}>Reset code</button>
