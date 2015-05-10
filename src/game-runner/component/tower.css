@@ -4,12 +4,23 @@
   position: absolute;
   margin-left: -5px;
   margin-top: -5px;
-  background: #b4ff2b;
+  background: #222;
   border: 1px solid #ffffff;
+  transition: all 100ms linear;
+}
+
+.tower .cannon {
+  position: absolute;
+  left: 4px;
+  height: 9px;
+  top: -5px;
+  background-color: #ffffff;
+  width: 2px;
 }
 
 .tower .range {
   position: absolute;
-  background: rgba(138, 255, 65, 0.2);
+  background: #8AFF41;
   border-radius: 1000px;
+  opacity: 0.1;
 }

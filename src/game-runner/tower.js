@@ -48,6 +48,7 @@ export default class Tower {
   }
 
   _damageTarget() {
+    this._angle = (this._position.clone().subtract(this._target.getPosition())).verticalAngleDeg();
     this._target.takeDamage(this._damage);
     var killedMinion = null;
     if(this._target.isDead()) {
@@ -70,7 +71,8 @@ export default class Tower {
     return {
       position: this._position,
       range: this._range,
-      damage: this._damage
+      damage: this._damage,
+      angle: this._angle
     };
   }
 }
