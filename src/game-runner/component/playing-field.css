@@ -51,6 +51,10 @@
   width: 60px;
 }
 
+button {
+  cursor: pointer;
+}
+
 .outcome {
   position: absolute;
   left: 0;
