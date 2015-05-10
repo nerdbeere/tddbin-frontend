@@ -1,6 +1,7 @@
 import React from 'react';
 import Minion from './minion.js';
 import Tower from './tower.js';
+import Point from './point.js';
 
 export default class PlayingField extends React.Component {
 
@@ -30,12 +31,15 @@ export default class PlayingField extends React.Component {
       </div>;
     }
 
-    //console.log(snapshot.path);
     const minions = snapshot.minions.map(function(minion) {
       return <Minion minion={minion}></Minion>;
     });
     const towers = snapshot.towers.map(function(tower) {
       return <Tower tower={tower}></Tower>;
+    });
+
+    const path = snapshot.path.map(function(point) {
+      return <Point point={point}></Point>
     });
 
     var playOrPause = <button onClick={onPlay}>
@@ -57,6 +61,7 @@ export default class PlayingField extends React.Component {
           <span>Minions reached target: {snapshot.minionsReachedTarget}</span>
         </div>
         <div className="playing-field">
+          {path}
           {minions}
           {towers}
         </div>

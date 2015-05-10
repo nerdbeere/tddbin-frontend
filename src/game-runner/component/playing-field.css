@@ -1,5 +1,6 @@
 @import "./minion.css";
 @import "./tower.css";
+@import "./point.css";
 
 .playing-field-container {
 

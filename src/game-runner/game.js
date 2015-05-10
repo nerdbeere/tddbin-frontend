@@ -24,10 +24,32 @@ class SpawnerCollection {
   }
 }
 
+class MinionPath {
+  constructor() {
+    this._points = [];
+  }
+
+  addPoint(x, y) {
+    for(var i = 0; i < this._points.length; i++) {
+      var point = this._points[i];
+      if(point[0] === x && point[1] === y) {
+        return false;
+      }
+    }
+    this._points.push([x, y]);
+    return true;
+  }
+
+  getPoints() {
+    return this._points;
+  }
+}
+
 export default class Game {
 
   constructor(levelConfig, playerSourceCode) {
     this._snapshots = [];
+    this._minionPath = new MinionPath();
     this._simulate(levelConfig, playerSourceCode);
     global.pf = PF;
   }
@@ -65,6 +87,11 @@ export default class Game {
       // minions tick
       this._spawner.getMinions().forEach(function(minion) {
         minion.tick(this._grid);
+        var position = minion.getPosition();
+        this._minionPath.addPoint(
+          position.x,
+          position.y
+        );
       }.bind(this));
 
       // towers tick
@@ -200,7 +227,8 @@ export default class Game {
       }),
       towers: this._towers.map(function(tower) {
         return tower.getSnapshot();
-      })
+      }),
+      path: this._minionPath.getPoints()
     };
 
     this._snapshots.push(snapshot);
