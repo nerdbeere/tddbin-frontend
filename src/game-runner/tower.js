@@ -44,8 +44,6 @@ export default class Tower {
       }
     }.bind(this));
 
-    console.log('Tower new target', newTarget, newTargetDistance);
-
     this._target = newTarget;
   }
 

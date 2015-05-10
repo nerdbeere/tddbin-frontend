@@ -7,8 +7,7 @@ export default class Game {
 
   constructor(playerSourceCode) {
     this._snapshots = [];
-    this._playerTick = this._createPlayerTick(playerSourceCode);
-    this._simulate();
+    this._simulate(playerSourceCode);
     global.pf = PF;
   }
 
@@ -16,22 +15,21 @@ export default class Game {
     return this._snapshots;
   }
 
-  _createPlayerTick(playerSourceCode) {
-
-    return function() {
-      const publicApi = this._getPublicApi();
-      const sourceCode = `
+  _executePlayerCode(playerSourceCode) {
+    const publicApi = this._getPublicApi();
+    const sourceCode = `
       (function(game) {
         ${playerSourceCode}
       })(publicApi);
     `;
 
-      eval(sourceCode);
-    };
+    eval(sourceCode);
   }
 
-  _simulate() {
+  _simulate(playerSourceCode) {
     this._setupLevel();
+
+    this._executePlayerCode(playerSourceCode);
 
     this._frame = 0;
     while (!this._hasFinished()) {
@@ -52,8 +50,14 @@ export default class Game {
         }
       }.bind(this));
 
+      const frame = {
+        towers: this._towers.map(function(tower) {
+          return tower.getSnapshot();
+        })
+      };
+
       // player tick
-      this._playerTick();
+      this._playerTick(frame);
 
       this._takeSnapshot();
 
@@ -163,10 +167,21 @@ export default class Game {
   }
 
   _takeSnapshot() {
+
+    const finder = new PF.AStarFinder();
+    const minionPath = finder.findPath(
+      this._minionSpawnLocation.x,
+      this._minionSpawnLocation.y,
+      this._minionTarget.x,
+      this._minionTarget.y,
+      this._grid.clone()
+    );
+
     var snapshot = {
       frame: this._frame,
       credits: this._credits,
       grid: this._grid,
+      path: minionPath,
       minionsReachedTarget: this._getAmountOfMinionsThatReachedTarget(),
       minionSpawnLocation: this._minionSpawnLocation,
       minionTarget: this._minionTarget,
@@ -186,10 +201,23 @@ export default class Game {
 
   _getPublicApi() {
     var game = this;
+
     return Object.freeze({
+      onFrame: function(callback) {
+        game._playerTick = callback;
+      },
+      getCurrentFrame: function() {
+        return game._frame;
+      },
+      canBuildTower: function() {
+        return game._towerCosts <= game._credits;
+      },
       buildTower: function(x, y) {
         // @TODO: make sure that towers can't block minions completely
-        if (game._towerCosts <= game._credits) {
+        if (this.canBuildTower() &&
+            game._grid.isInside(x, y) &&
+            game._grid.isWalkableAt(x, y)) {
+
           game._spendCredits(game._towerCosts);
           game._towers.push(new Tower(x, y));
           game._grid.setWalkableAt(x, y, false);
