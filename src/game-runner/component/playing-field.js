@@ -21,8 +21,6 @@ export default class PlayingField extends React.Component {
       </div>;
     }
 
-    console.log(victory);
-
     var victoryOrDefeat = <div className="outcome defeat">
       Defeat
     </div>;
