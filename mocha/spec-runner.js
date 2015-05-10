@@ -43629,7 +43629,7 @@ module.exports={
   "_id": "babel-core@4.7.16",
   "scripts": {},
   "_shasum": "bd006f1011b0767f4df35f83c28e7ea761f0ef8d",
-  "_from": "babel-core@^4.7.8",
+  "_from": "babel-core@>=4.7.8 <5.0.0",
   "_npmVersion": "2.6.0",
   "_nodeVersion": "1.4.1",
   "_npmUser": {
@@ -43647,7 +43647,8 @@ module.exports={
     "tarball": "http://registry.npmjs.org/babel-core/-/babel-core-4.7.16.tgz"
   },
   "directories": {},
-  "_resolved": "https://registry.npmjs.org/babel-core/-/babel-core-4.7.16.tgz"
+  "_resolved": "https://registry.npmjs.org/babel-core/-/babel-core-4.7.16.tgz",
+  "readme": "ERROR: No README data found!"
 }
 
 },{}],349:[function(require,module,exports){
