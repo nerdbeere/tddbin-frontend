@@ -62,7 +62,39 @@ export default class TestRunner {
   }
 
   send(sourceCode) {
-    var game = new Game(sourceCode);
+
+    const levelConfig = {
+      startCredits: 100,
+      towerCosts: 60,
+      minionTarget: [15, 55],
+      spawners: [
+        {
+          spawnLocation: [15, 1],
+          minionConfig: [{
+            health: 100
+          }, {
+            health: 100
+          }, {
+            health: 100
+          }, {
+            health: 100
+          }, {
+            health: 100
+          }, {
+            health: 100
+          }, {
+            health: 100
+          }, {
+            health: 100
+          }, {
+            health: 100
+          }]
+        }
+      ],
+      maxMinionsToReachTarget: 5
+    };
+
+    var game = new Game(levelConfig, sourceCode);
     this._isVictory = game.isVictory();
     this._snapshots = game.getSnapshots();
     this.render();

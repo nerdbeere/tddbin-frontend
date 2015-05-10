@@ -3,11 +3,32 @@ import Spawner from './spawner.js';
 import PF from 'pathfinding';
 import Victor from 'victor';
 
+class SpawnerCollection {
+  constructor() {
+    this._spawners = [];
+  }
+  push(spawner) {
+    this._spawners.push(spawner);
+  }
+  getMinions() {
+    var minions = [];
+    this._spawners.forEach(function(spawner) {
+      minions = minions.concat(spawner.getMinions());
+    });
+    return minions;
+  }
+  tick() {
+    this._spawners.forEach(function(spawner) {
+      spawner.tick();
+    });
+  }
+}
+
 export default class Game {
 
-  constructor(playerSourceCode) {
+  constructor(levelConfig, playerSourceCode) {
     this._snapshots = [];
-    this._simulate(playerSourceCode);
+    this._simulate(levelConfig, playerSourceCode);
     global.pf = PF;
   }
 
@@ -30,8 +51,8 @@ export default class Game {
     eval(sourceCode);
   }
 
-  _simulate(playerSourceCode) {
-    this._setupLevel();
+  _simulate(levelConfig, playerSourceCode) {
+    this._setupLevel(levelConfig);
 
     this._executePlayerCode(playerSourceCode);
 
@@ -70,42 +91,31 @@ export default class Game {
       }
     }
 
-    console.log('Is Victory?', this._isVictory);
-
   }
 
-  _setupLevel() {
+  _setupLevel(levelConfig) {
     this._isVictory = false;
-    this._credits = 100;
-    this._towerCosts = 60;
+    this._credits = levelConfig.startCredits;
+    this._towerCosts = levelConfig.towerCosts;
     this._towers = [];
     this._grid = new PF.Grid(30, 60);
-    this._minionTarget = new Victor(15, 55);
-    this._minionSpawnLocation = new Victor(15, 1);
-    this._maxMinionsToReachTarget = 5;
-    this._spawner = new Spawner(
-      this._minionSpawnLocation,
-      this._minionTarget,
-      [{
-        health: 100
-      }, {
-        health: 100
-      }, {
-        health: 100
-      }, {
-        health: 100
-      }, {
-        health: 100
-      }, {
-        health: 100
-      }, {
-        health: 100
-      }, {
-        health: 100
-      }, {
-        health: 100
-      }]
+    this._minionTarget = new Victor(
+      levelConfig.minionTarget[0],
+      levelConfig.minionTarget[1]
     );
+    this._maxMinionsToReachTarget = levelConfig.maxMinionsToReachTarget;
+    this._spawner = new SpawnerCollection();
+
+    levelConfig.spawners.forEach(function(spawnerConfig) {
+      this._spawner.push(new Spawner(
+        new Victor(
+          spawnerConfig.spawnLocation[0],
+          spawnerConfig.spawnLocation[1]
+        ),
+        this._minionTarget,
+        spawnerConfig.minionConfig
+      ));
+    }.bind(this));
   }
 
   _hasFinished() {
