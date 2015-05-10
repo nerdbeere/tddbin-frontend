@@ -19,6 +19,8 @@ export default class TestRunner {
         onNext={this.onNext.bind(this)}
         onPrevious={this.onPrevious.bind(this)}
         onPlay={this.onPlay.bind(this)}
+        onPause={this.onPause.bind(this)}
+        isPlaying={this._playing}
         snapshot={this._snapshots[this._currentSnapshot]}
       ></PlayingField>,
       this._domNode
@@ -83,7 +85,13 @@ export default class TestRunner {
     this.play();
   }
 
+  onPause() {
+    this.stop();
+    this.render(true);
+  }
+
   onPrevious() {
+    this.stop();
     this._previous();
     this.render(true);
   }

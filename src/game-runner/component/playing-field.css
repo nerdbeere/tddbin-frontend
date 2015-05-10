@@ -2,7 +2,7 @@
 @import "./tower.css";
 
 .playing-field-container {
-  position: relative;
+
 }
 
 .frame-meta-data {
@@ -21,4 +21,25 @@
   position: absolute;
   left: calc(50% - 150px);
   top: 100px;
+}
+
+.controls {
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.controls button {
+  background-color: #363738;
+  font-size: 18px;
+  border: 1px solid #303132;
+  color: #ffffff;
+  outline: none;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 500px;
+  height: 60px;
+  width: 60px;
 }

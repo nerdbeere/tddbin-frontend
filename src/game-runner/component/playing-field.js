@@ -5,7 +5,14 @@ import Tower from './tower.js';
 export default class PlayingField extends React.Component {
 
   render() {
-    const {snapshot, onNext, onPrevious, onPlay} = this.props;
+    const {
+      snapshot,
+      onNext,
+      onPrevious,
+      onPlay,
+      onPause,
+      isPlaying
+    } = this.props;
 
     if(!snapshot) {
       return <div>
@@ -21,6 +28,16 @@ export default class PlayingField extends React.Component {
       return <Tower tower={tower}></Tower>;
     });
 
+    var playOrPause = <button onClick={onPlay}>
+      <i className="fa fa-play"></i>
+    </button>;
+
+    if(isPlaying) {
+      playOrPause = <button onClick={onPause}>
+        <i className="fa fa-pause"></i>
+      </button>;
+    }
+
     return (
       <div className="playing-field-container">
         <div className="frame-meta-data">
@@ -33,9 +50,13 @@ export default class PlayingField extends React.Component {
           {towers}
         </div>
         <div className="controls">
-          <button onClick={onPrevious}>previous</button>
-          <button onClick={onNext}>next</button>
-          <button onClick={onPlay}>play</button>
+          <button onClick={onPrevious}>
+            <i className="fa fa-chevron-left"></i>&nbsp;
+          </button>
+          {playOrPause}
+          <button onClick={onNext}>
+            <i className="fa fa-chevron-right"></i>
+          </button>
         </div>
       </div>
     );
