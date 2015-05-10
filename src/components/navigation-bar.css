@@ -17,6 +17,16 @@
   z-index: 1000; /* we have to make sure that it is above ace, this is not the best way :( */
 }
 
+.navigation-bar .fa-shield {
+  margin: 10px;
+  position: relative;
+  font-size: 24px;
+  top: 4px;
+  color: #FFF;
+  margin-left: 18px;
+  margin-right: 18px;
+}
+
 .navigation-bar .tddbin {
   color: white;
   font-weight: bold;
